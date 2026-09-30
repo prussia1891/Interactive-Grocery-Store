@@ -10,12 +10,18 @@ public class CrosshairController : MonoBehaviour
     public float interactionDistance = 100f;
 
     private RectTransform rectTransform;
-    private Canvas canvas;
+    private RectTransform canvasRect;
 
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
+
+        Canvas canvas = GetComponentInParent<Canvas>();
+
+        if (canvas != null)
+        {
+            canvasRect = canvas.GetComponent<RectTransform>();
+        }
 
         if (mainCamera == null)
         {
@@ -29,7 +35,7 @@ public class CrosshairController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            CheckObject();
+            TryInteract();
         }
     }
 
@@ -62,7 +68,8 @@ public class CrosshairController : MonoBehaviour
             vertical -= 1f;
         }
 
-        Vector2 direction = new Vector2(horizontal, vertical);
+        Vector2 direction =
+            new Vector2(horizontal, vertical);
 
         if (direction.magnitude > 1f)
         {
@@ -72,18 +79,24 @@ public class CrosshairController : MonoBehaviour
         rectTransform.anchoredPosition +=
             direction * moveSpeed * Time.deltaTime;
 
-        ClampToScreen();
+        ClampToCanvas();
     }
 
-    void ClampToScreen()
+    void ClampToCanvas()
     {
-        RectTransform canvasRect =
-            canvas.GetComponent<RectTransform>();
+        if (canvasRect == null)
+        {
+            return;
+        }
 
-        Vector2 position = rectTransform.anchoredPosition;
+        Vector2 position =
+            rectTransform.anchoredPosition;
 
-        float halfWidth = canvasRect.rect.width / 2f;
-        float halfHeight = canvasRect.rect.height / 2f;
+        float halfWidth =
+            canvasRect.rect.width / 2f;
+
+        float halfHeight =
+            canvasRect.rect.height / 2f;
 
         position.x = Mathf.Clamp(
             position.x,
@@ -100,8 +113,13 @@ public class CrosshairController : MonoBehaviour
         rectTransform.anchoredPosition = position;
     }
 
-    void CheckObject()
+    void TryInteract()
     {
+        if (mainCamera == null)
+        {
+            return;
+        }
+
         Vector2 screenPosition =
             RectTransformUtility.WorldToScreenPoint(
                 null,
@@ -111,21 +129,23 @@ public class CrosshairController : MonoBehaviour
         Ray ray =
             mainCamera.ScreenPointToRay(screenPosition);
 
-        RaycastHit hit;
-
         if (Physics.Raycast(
             ray,
-            out hit,
+            out RaycastHit hit,
             interactionDistance))
         {
             Debug.Log(
-                "Crosshair selected: " +
+                "Selected: " +
                 hit.collider.gameObject.name
             );
-        }
-        else
-        {
-            Debug.Log("No object selected.");
+
+            Interactable interactable =
+                hit.collider.GetComponentInParent<Interactable>();
+
+            if (interactable != null)
+            {
+                interactable.Interact();
+            }
         }
     }
 }
