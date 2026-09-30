@@ -1,7 +1,12 @@
 # Interactive Grocery Store
 
 - A small interactive Unity scene created for the interactive elements assignment.
-
+- The project contains five interactive elements:
+  - a physics-based falling interaction for grocery items
+  - a color-changing chocolate interaction
+  - a scale-changing tomato interaction
+  - a sliding fruit-case interaction
+  - a cashier UI interaction
 - The project uses the free **Lite Grocery Store Pack** from the Unity Asset Store as the environment. The interaction logic and scene modifications were implemented for this assignment.
 
 ## Unity Version
@@ -31,30 +36,23 @@ When a tomato is selected and `E` is pressed, the tomato increases in size. Pres
 When a fruit case is selected and `E` is pressed, the case slides outward. Pressing `E` again moves it back to its original position.
 
 ### 5. UI Interaction
-When the cashier is selected and `E` is pressed, the following message appears on screen:
-
-**You little troublemaker!**
-
-The message automatically disappears after a short period.
+- When the cashier is selected and `E` is pressed, the following message appears on screen:
+  - **You little troublemaker!*
+- The message automatically disappears after a short period.
 
 ## Interaction System
 
 - A movable UI crosshair is used to select objects in the scene.
-
 - The crosshair screen position is converted into a ray from the Main Camera using `ScreenPointToRay`. A physics raycast detects the object under the crosshair.
-
 - Interactive objects inherit from a common `Interactable` class and implement their own `Interact()` behavior.
 
 ## Third-Party Asset
 
-- Environment: **Lite Grocery Store Pack**  - Unity Asset Store
-
+- Environment: [Lite Grocery Store Pack](https://assetstore.unity.com/packages/3d/environments/lite-grocery-store-pack-378776)  - Unity Asset Store
 - **The original third-party asset files are not included in this repository.**
-
 - To reproduce the complete scene, import the Lite Grocery Store Pack into the Unity project before opening the grocery store scene.
 
 ## Demo Video
 
 YouTube demo:
-
 []
