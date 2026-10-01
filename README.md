@@ -42,7 +42,7 @@ When a fruit case is selected and `E` is pressed, the case slides outward. Press
 
 ## Interaction System
 
-- A movable UI crosshair (a little white cube) is used to select objects in the scene.
+- A movable UI crosshair (a little white square) is used to select objects in the scene.
 - The crosshair screen position is converted into a ray from the Main Camera using `ScreenPointToRay`. A physics raycast detects the object under the crosshair.
 - Interactive objects inherit from a common `Interactable` class and implement their own `Interact()` behavior.
 
@@ -55,4 +55,4 @@ When a fruit case is selected and `E` is pressed, the case slides outward. Press
 ## Demo Video
 
 YouTube demo:
-[]
+[Interactive Grocery Store - IMTC505 Assignment1](https://youtu.be/vyYHHnjZcG8)
